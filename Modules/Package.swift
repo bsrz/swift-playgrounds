@@ -1,34 +1,30 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 5.9
 
-import Foundation
 import PackageDescription
-
-extension Target.Dependency {
-    static let navigation: Self = .product(name: "SwiftUINavigation", package: "swiftui-navigation")
-    static func named(_ name: String) -> Self { .init(stringLiteral: name) }
-}
 
 let package = Package(
     name: "playgrounds-modules",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
+        .library(name: "DependenciesExplorations", targets: ["DependenciesExplorations"]),
         .library(name: "Play", targets: ["Play"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "1.2.0")),
     ],
     targets: [
         .target(
-            name: "Play",
+            name: "DependenciesExplorations",
             dependencies: [
-                .navigation
+                .product(
+                    name: "Dependencies",
+                    package: "swift-dependencies"
+                )
             ]
         ),
-        .testTarget(
-            name: "PlayTests",
-            dependencies: [
-                "Play"
-            ]
-        ),
+        .testTarget(name: "DependenciesExplorationsTests", dependencies: ["DependenciesExplorations"]),
+
+        .target(name: "Play"),
+        .testTarget(name: "PlayTests", dependencies: ["Play"]),
     ]
 )
