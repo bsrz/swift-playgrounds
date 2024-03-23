@@ -8,6 +8,7 @@ let package = Package(
     products: [
         .library(name: "DependenciesExplorations", targets: ["DependenciesExplorations"]),
         .library(name: "Play", targets: ["Play"]),
+        .library(name: "StructuredConcurrency", targets: ["StructuredConcurrency"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "1.2.0")),
@@ -23,6 +24,9 @@ let package = Package(
             ]
         ),
         .testTarget(name: "DependenciesExplorationsTests", dependencies: ["DependenciesExplorations"]),
+
+        .target(name: "StructuredConcurrency"),
+        .testTarget(name: "StructuredConcurrencyTests", dependencies: ["StructuredConcurrency"]),
 
         .target(name: "Play"),
         .testTarget(name: "PlayTests", dependencies: ["Play"]),
